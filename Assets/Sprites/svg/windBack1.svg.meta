@@ -40,16 +40,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: windBack1Sprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       alignment: 0
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 46, z: 0, w: 1}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 100
+        height: 50
       spriteID: 6f4f1ad9dcfc24a98af18b9bb1f3b7ac
     PhysicsOutlines: []
