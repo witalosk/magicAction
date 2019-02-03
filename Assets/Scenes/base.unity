@@ -389,8 +389,8 @@ GameObject:
   - component: {fileID: 324404134}
   - component: {fileID: 324404136}
   - component: {fileID: 324404133}
-  - component: {fileID: 324404132}
   - component: {fileID: 324404135}
+  - component: {fileID: 324404132}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -398,8 +398,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &324404132
-BoxCollider2D:
+--- !u!70 &324404132
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -411,18 +411,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
-  m_EdgeRadius: 0
+  m_Direction: 0
 --- !u!212 &324404133
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -833,7 +823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220f646d2fe68492aaa71007b8e8242c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onAwake: 0
 --- !u!1 &1999445096
 GameObject:
   m_ObjectHideFlags: 0
