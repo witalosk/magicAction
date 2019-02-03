@@ -31,9 +31,9 @@ public class BgScroll : MonoBehaviour {
 	}
 
 	void LateUpdate(){
-		// bgParentTrans.position += Vector3.right * (playerTrans.position.x - prePos.x) * speed;
-		bgParentTrans.position += (playerTrans.position - prePos) * speed;
-		// bgParentTrans.position += Vector3.up * (playerTrans.position.y - prePos.y);
+		bgParentTrans.position += Vector3.right * (playerTrans.position.x - prePos.x) * speed;
+		// bgParentTrans.position += (playerTrans.position - prePos) * speed;
+		// bgParentTrans.position -= Vector3.up * (playerTrans.position.y - prePos.y);
 		prePos = playerTrans.position;
 
 		CheckSeamless();
