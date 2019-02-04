@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2800f5f01d43440fe9abd3a245507e3e
+guid: 71094609480b64bc89ecd5618791fcad
 ScriptedImporter:
   fileIDToRecycleName:
     2800000: tex
@@ -11,8 +11,8 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
   svgType: 1
   texturedSpriteMeshType: 0
-  svgPixelsPerUnit: 100
-  gradientResolution: 128
+  svgPixelsPerUnit: 800
+  gradientResolution: 1024
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -28,25 +28,25 @@ ScriptedImporter:
   maxTangentAngleEnabled: 0
   maxTangentAngle: 5
   keepTextureAspectRatio: 1
-  textureSize: 1024
+  textureSize: 2048
   textureWidth: 256
   textureHeight: 256
-  wrapMode: 2
+  wrapMode: 0
   filterMode: 1
   sampleCount: 4
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: windBack1Sprite
+      name: neelde
       originalName: 
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       alignment: 0
-      border: {x: 0, y: 46, z: 0, w: 0}
+      border: {x: 396, y: 0, z: 396, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
-        height: 50
-      spriteID: 6f4f1ad9dcfc24a98af18b9bb1f3b7ac
+        width: 2048
+        height: 1410
+      spriteID: 5ba57edde920b4e198be2612a1ef4303
     PhysicsOutlines: []
