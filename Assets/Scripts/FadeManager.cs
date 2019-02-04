@@ -19,6 +19,8 @@ public class FadeManager : MonoBehaviour {
 	static float fadeTime;
 	static Action action;
 
+	static bool isUnscaledTime;
+
 	// [SerializeField] bool onAwake;
 
 	void Awake(){
@@ -29,25 +31,38 @@ public class FadeManager : MonoBehaviour {
 	}
 
 	public static void FadeIn(float fadeTime, int color, Action action){
-		FadeStart (1f, 0f, fadeTime, action, color);
+		FadeStart (1f, 0f, fadeTime, action, color, false);
 	}
 	public static void FadeIn(float fadeTime, int color){
-		FadeStart (1f, 0f, fadeTime, null, color);
+		FadeStart (1f, 0f, fadeTime, null, color, false);
+	}	
+	public static void FadeIn(float fadeTime, int color, Action action, bool isUnscaledTime){
+		FadeStart (1f, 0f, fadeTime, action, color, true);
+	}
+	public static void FadeIn(float fadeTime, int color, bool isUnscaledTime){
+		FadeStart (1f, 0f, fadeTime, null, color, true);
 	}
 	public static void FadeOut(float fadeTime, int color, Action action){
-		FadeStart (0f, 1f, fadeTime, action, color);
+		FadeStart (0f, 1f, fadeTime, action, color, false);
 	}
 	public static void FadeOut(float fadeTime, int color){
-		FadeStart (0f, 1f, fadeTime, null, color);
+		FadeStart (0f, 1f, fadeTime, null, color, false);
+	}
+		public static void FadeOut(float fadeTime, int color, Action action, bool isUnscaledTime){
+		FadeStart (0f, 1f, fadeTime, action, color, true);
+	}
+	public static void FadeOut(float fadeTime, int color, bool isUnscaledTime){
+		FadeStart (0f, 1f, fadeTime, null, color, true);
 	}
 
 
 	//color=0のとき黒、color=1のとき白
-	public static void FadeStart(float _startAlpha, float _endAlpha, float _fadeTime, Action _action, int color){
+	public static void FadeStart(float _startAlpha, float _endAlpha, float _fadeTime, Action _action, int color, bool _isUnScaledTime){
 		startAlpha = _startAlpha;
 		endAlpha = _endAlpha;
 		fadeTime = _fadeTime;
 		action = _action;
+		isUnscaledTime = _isUnScaledTime;
 
 		fadeImg.color = new Color (color, color, color, startAlpha);
 		time = 0;
@@ -56,7 +71,8 @@ public class FadeManager : MonoBehaviour {
 
 	void Update(){
 		if (fadeFlag) {
-			time += Time.deltaTime / fadeTime;
+			float deltaTime = (isUnscaledTime) ? Time.unscaledDeltaTime : Time.deltaTime; //unscaledDeltaTimeはTime.timeScale=0でも動作する
+			time += deltaTime / fadeTime;
 			SetAlpha (Mathf.Lerp (startAlpha, endAlpha, time));
 			if (time >= 1f) {
 				fadeFlag = false;

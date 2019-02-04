@@ -15,8 +15,6 @@ public class MoveFloor : MonoBehaviour {
 
 	float t;
 
-	float playerRayDist = 10f; //プレイヤーの大きさによって変更する
-
 	bool playerOnMe;
 
 	[System.NonSerialized] public bool active;
@@ -46,7 +44,7 @@ public class MoveFloor : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.gameObject.tag == "Player"){ //衝突したのがPlayerだった場合
 			Transform playerTrans = col.transform;
-			RaycastHit2D hit = Physics2D.Raycast(playerTrans.position, Vector3.down, playerRayDist, ~(1 << 9)); //Playerの足元にあるオブジェクトを取得
+			RaycastHit2D hit = playerTrans.GetComponent<PlayerController>().GetCollisionUnderPlayer(); //Playerの足元にあるオブジェクトを取得
 			if(hit && hit.transform == myTrans){ //Playerの足元に自分(動く床)があった場合
 				playerTrans.parent = myTrans; //Playerを動く床の子オブジェクトにすることで、一緒に移動する
 				playerOnMe = true;
