@@ -791,9 +791,8 @@ MonoBehaviour:
   playerMoveSpeed: 10
   jumpPower: 800
   gravityForce: 30
-  groundCheckLM:
-    serializedVersion: 2
-    m_Bits: 311
+  checkGroundRayLength: 0
+  canInput: 0
 --- !u!1001 &380351864
 Prefab:
   m_ObjectHideFlags: 0
@@ -2166,9 +2165,8 @@ MonoBehaviour:
   playerMoveSpeed: 10
   jumpPower: 800
   gravityForce: 30
-  groundCheckLM:
-    serializedVersion: 2
-    m_Bits: 311
+  checkGroundRayLength: 1.64
+  canInput: 0
 --- !u!1001 &1585547395
 Prefab:
   m_ObjectHideFlags: 0

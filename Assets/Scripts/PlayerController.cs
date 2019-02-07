@@ -2,87 +2,87 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
-    Transform playerTrans;
-    Rigidbody2D playerRB;
+  Transform playerTrans;
+  Rigidbody2D playerRB;
 
-    [SerializeField] float playerMoveSpeed;
-    [SerializeField] float jumpPower;
+  [SerializeField] float playerMoveSpeed; //移動速度
+  [SerializeField] float jumpPower; //ジャンプ力
 
-    [SerializeField] float gravityForce;
+  [SerializeField] float gravityForce; //追加の重力（これがないと落下に時間がかかり、ゲームっぽくない）
 
-    [SerializeField] LayerMask groundCheckLM;
+  [SerializeField] float checkGroundRayLength; //着地しているかを検知するときに確認する長さ（地面にギリギリ当たる長さにする）
 
-    bool isGround;
-    bool checkGround;
+  bool isGround; //接地しているか
+  bool checkGround; //接地判定をするか（ジャンプ直後はしない）
 
-    // アニメーション用
-    private Animator animator;
+  public bool canInput; //入力を受け付けるか
 
+  // アニメーション用
+  private Animator animator;
 
-    void Awake()
-    {
-        playerTrans = transform;
-        playerRB = GetComponent<Rigidbody2D>();
-    }
+  void Awake(){
+    playerTrans = transform;
+    playerRB = GetComponent<Rigidbody2D> ();
+  }
 
-    public void Start()
-    {
-        isGround = true;
-        checkGround = false;
-
-        animator = GetComponent<Animator>(); // アニメータの取得
-    }
+  public void Start(){
+    isGround = true;
+    checkGround = false;
+    
+    animator = GetComponent<Animator>(); // アニメータの取得
+  }
 
 
-    void Update()
-    {
-        if (!isGround && checkGround)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(playerTrans.position, Vector2.down, 2.0f, groundCheckLM);
-            if (hit) isGround = true;
-        }
-        animator.SetBool("is_running", false);
+  void Update () {
+    if(!isGround && checkGround){
+      if(GetCollisionUnderPlayer()) isGround = true; //接地していたらisGroundをtrueにする
+    }
 
-        float dir = Input.GetAxisRaw("Horizontal");
-        if (Mathf.Abs(dir) > 0.01f)
-            PlayerMove(dir);
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            PlayerJump();
-    }
+    animator.SetBool("is_running", false);
 
-    void FixedUpdate()
-    {
-        playerRB.AddForce(Vector2.down * gravityForce);
-    }
+    if(canInput){
+      float dir = Input.GetAxisRaw("Horizontal"); //左右キーの入力を取得（左キーは-1、右キーは1）
+      if (Mathf.Abs(dir) > 0) //左右キーの入力があったら移動処理
+        PlayerMove (dir);
+      if (Input.GetKeyDown (KeyCode.UpArrow)) //上キーの入力があったらジャンプ処理
+        PlayerJump ();
+    }
+  }
 
-    void PlayerMove(float dir)
-    {
-        animator.SetBool("is_running", true);
-        playerTrans.position += Vector3.right * dir * playerMoveSpeed * Time.deltaTime;
+  void FixedUpdate(){
+    playerRB.AddForce(Vector2.down * gravityForce); //追加の重力
+  }
 
-        // プレーヤーの描画向き変更
-        if (dir > 0) playerTrans.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-        else playerTrans.localScale = new Vector3(-2.0f, 2.0f, 2.0f);
-    }
+  void PlayerMove(float dir){
+    animator.SetBool("is_running", true);
+    playerTrans.position += Vector3.right * dir * playerMoveSpeed * Time.deltaTime; //Playerの座標 += 右ベクトル * 方向(-1 or 1) * 移動速度 * 前フレームからの時間
+  
+    // プレーヤーの描画向き変更
+    if (dir > 0) playerTrans.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+    else playerTrans.localScale = new Vector3(-2.0f, 2.0f, 2.0f);
+  }
 
-    void PlayerJump()
-    {
-        if (isGround)
-        {
-            animator.SetTrigger("is_jumping");
-            playerRB.velocity = new Vector3(playerRB.velocity.x, 0, 0);
-            playerRB.AddForce(Vector2.up * jumpPower);
-            isGround = false;
-            checkGround = false;
-            Invoke("EnableCheckGround", 0.2f);
-        }
-    }
+  void PlayerJump(){
+    if (isGround) {
+      animator.SetTrigger("is_jumping");
+      playerRB.velocity = new Vector3(playerRB.velocity.x, 0, 0); //一度垂直方向の加速度をリセット
+      playerRB.AddForce (Vector2.up * jumpPower); //上方向にjumpPower分の力を加える
+      isGround = false;
+      checkGround = false; //このタイミングで接地判定すると既に接地していると誤判定が起こりやすいため↓
+      Invoke("EnableCheckGround", 0.2f); //0.2秒後に接地判定を開始する
+    }
+  }
 
-    void EnableCheckGround()
-    {
-        checkGround = true;
-    }
+  void EnableCheckGround(){
+    checkGround = true; //接地判定開始
+  }
+
+  public RaycastHit2D GetCollisionUnderPlayer(){
+    //Playerの足元にColliderがあるかを判定（接地判定）  最後の引数はレイヤー9(Playerレイヤー)以外を対象とする、という意味
+    RaycastHit2D hit = Physics2D.Raycast (playerTrans.position, Vector2.down, checkGroundRayLength, ~(1 << 9));
+    return hit;
+  }
 }
+
