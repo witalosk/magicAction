@@ -16,8 +16,8 @@ ScriptedImporter:
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 128
-  alignment: 0
-  customPivot: {x: 0, y: 0}
+  alignment: 7
+  customPivot: {x: 0.5, y: 0}
   generatePhysicsShape: 0
   preserveViewport: 0
   advancedMode: 0
@@ -31,25 +31,25 @@ ScriptedImporter:
   maxTangentAngleEnabled: 0
   maxTangentAngle: 5
   keepTextureAspectRatio: 1
-  textureSize: 256
+  textureSize: 4096
   textureWidth: 256
   textureHeight: 256
-  wrapMode: 0
+  wrapMode: 1
   filterMode: 1
   sampleCount: 4
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: windBack1Sprite
       originalName: 
-      pivot: {x: 0, y: 0}
-      alignment: 0
+      pivot: {x: 0.5, y: 0}
+      alignment: 7
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 100
+        height: 50
       spriteID: 6f4f1ad9dcfc24a98af18b9bb1f3b7ac
     PhysicsOutlines: []
