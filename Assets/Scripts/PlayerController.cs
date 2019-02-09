@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour {
 
   public bool canInput; //入力を受け付けるか
 
+  float actionRayLengthForward = 1.5f; //ActionTriggerを検知するRayの前方向の長さ
+  float actionRayLengthBack = 0.75f; //ActionTriggerを検知するRayの後ろ方向の長さ
+
   // アニメーション用
   private Animator animator;
 
@@ -48,6 +51,8 @@ public class PlayerController : MonoBehaviour {
         PlayerMove (dir);
       if (Input.GetKeyDown (KeyCode.UpArrow)) //上キーの入力があったらジャンプ処理
         PlayerJump ();
+      if (Input.GetKeyDown (KeyCode.Space)) //スペースキーの入力があったらアクション処理
+        PlayerAction ();
     }
   }
 
@@ -84,5 +89,24 @@ public class PlayerController : MonoBehaviour {
     RaycastHit2D hit = Physics2D.Raycast (playerTrans.position, Vector2.down, checkGroundRayLength, ~(1 << 9));
     return hit;
   }
+
+  void PlayerAction(){
+    RaycastHit2D[] hits = GetActionTrigger();
+    foreach (RaycastHit2D hit in hits){
+      if(hit.transform.GetComponent<ActionTrigger>()){
+        hit.transform.GetComponent<ActionTrigger>().ExecuteAction();
+      }
+    }
+  }
+
+  RaycastHit2D[] GetActionTrigger(){
+    //Playerの正面にActionTriggerがあるかを判定  最後の引数はレイヤー9(Playerレイヤー)を対象とする、という意味
+    RaycastHit2D[] hits = Physics2D.RaycastAll (
+      playerTrans.position - playerTrans.right * actionRayLengthBack, 
+      playerTrans.right * (actionRayLengthBack + actionRayLengthForward), 
+      checkGroundRayLength, 1 << 10);
+    return hits;
+  }
+
 }
 
