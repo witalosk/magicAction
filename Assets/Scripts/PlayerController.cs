@@ -19,8 +19,8 @@ public class PlayerController : MonoBehaviour {
 
   public bool canInput; //入力を受け付けるか
 
-  float actionRayLengthForward = 1.5f; //ActionTriggerを検知するRayの前方向の長さ
-  float actionRayLengthBack = 0.75f; //ActionTriggerを検知するRayの後ろ方向の長さ
+  float actionRayLengthForward = 1.0f; //ActionTriggerを検知するRayの前方向の長さ
+  float actionRayLengthBack = 0.5f; //ActionTriggerを検知するRayの後ろ方向の長さ
 
   // アニメーション用
   private Animator animator;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
     isGround = true;
     checkGround = false;
     
-    animator = GetComponent<Animator>(); // アニメータの取得
+    animator = GetComponentInChildren<Animator>(); // アニメータの取得
   }
 
 
@@ -100,11 +100,12 @@ public class PlayerController : MonoBehaviour {
   }
 
   RaycastHit2D[] GetActionTrigger(){
-    //Playerの正面にActionTriggerがあるかを判定  最後の引数はレイヤー9(Playerレイヤー)を対象とする、という意味
+    //Playerの正面にActionTriggerがあるかを判定  最後の引数はレイヤー10(ActionTriggerレイヤー)を対象とする、という意味
     RaycastHit2D[] hits = Physics2D.RaycastAll (
       playerTrans.position - playerTrans.right * actionRayLengthBack, 
-      playerTrans.right * (actionRayLengthBack + actionRayLengthForward), 
-      checkGroundRayLength, 1 << 10);
+      playerTrans.right, 
+      actionRayLengthBack + actionRayLengthForward, 
+      1 << 10);
     return hits;
   }
 
