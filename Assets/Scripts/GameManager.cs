@@ -9,12 +9,22 @@ public class GameManager : MonoBehaviour {
 
     float untilReloadTime = 0.4f;
 
+
+	// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    void Awake(){
+        int stageNo = PlayerPrefs.GetInt("STAGE_NO", 1);
+		SceneManager.LoadScene("Stage" + stageNo, LoadSceneMode.Additive);
+    }
+
     void Start(){
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        InitStage();
+    }
+
+    public void InitStage(){
         playerScript.canInput = true;
         Time.timeScale = 1f; //ゲーム内の時間の流れを通常にする
-        FadeManager.FadeIn(1f, 0); //フェードインでシーン開始
-    }
+    }
 
     //Player死亡時に呼び出す関数
     public void PlayerDead(){
