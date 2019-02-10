@@ -6,17 +6,11 @@ public class BlowWind : MonoBehaviour {
 
 	[SerializeField] Vector2 windVec;
 
-	[SerializeField] Transform[] blownTranses;
-	bool[] isBlown;
 	[SerializeField] bool playOnAwake;
 
 	bool active;
 
 	void Awake(){
-		isBlown = new bool[blownTranses.Length];
-		for(int i = 0; i < isBlown.Length; i++){
-			isBlown[i] = false;
-		}
 		active = playOnAwake;
 	}
 
@@ -24,33 +18,11 @@ public class BlowWind : MonoBehaviour {
 		active = !active;
 	}
 
-	void FixedUpdate () {
-		if(active){
-			for(int i = 0; i < blownTranses.Length; i++){
-				if(isBlown[i]){
-					Blow(blownTranses[i].GetComponent<Rigidbody2D>());
-				}
-			}
-		}
-	}
-
 	void Blow(Rigidbody2D rb){
 		rb.AddForce(windVec);
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
-		for(int i = 0; i < blownTranses.Length; i++){
-			if(col.transform == blownTranses[i]){
-				isBlown[i] = true;
-			}
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D col) {
-		for(int i = 0; i < blownTranses.Length; i++){
-			if(col.transform == blownTranses[i]){
-				isBlown[i] = false;
-			}
-		}
+	void OnTriggerStay2D(Collider2D other) {
+		if(active) Blow(other.transform.GetComponent<Rigidbody2D>());
 	}
 }

@@ -9,7 +9,6 @@ public class ActionTrigger : MonoBehaviour {
 
 	public void ExecuteAction(){
 		foreach (UnityEvent action in actions){
-			Debug.Log("action");
 			action.Invoke();
 		}
 	}
