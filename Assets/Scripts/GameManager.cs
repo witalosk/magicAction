@@ -36,5 +36,9 @@ public class GameManager : MonoBehaviour {
     void ReloadScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); //現在のシーンを再読み込み
     }
+
+    public void LoadNextStage(){
+        Debug.Log("ステージ遷移");
+    }
 }
 

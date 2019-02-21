@@ -53,7 +53,9 @@ public class PlayerController : MonoBehaviour {
         PlayerJump ();
       if (Input.GetKeyDown (KeyCode.Space)) //スペースキーの入力があったらアクション処理
         PlayerAction ();
-    }
+    }else{
+      animator.Rebind();
+    }
   }
 
   void FixedUpdate(){
