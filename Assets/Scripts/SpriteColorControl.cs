@@ -28,15 +28,6 @@ public class SpriteColorControl : MonoBehaviour {
 	void Update(){
 		if(active){
 			Color c = mySR.color;
-			//アルファ値の変更
-			if(alphas.Length > 0){
-				tAlpha += Time.deltaTime / timeAlphas[idxAlpha];
-				c = ChangeAlpha(c, Mathf.Lerp(alphas[idxAlpha], alphas[(idxAlpha + 1) % alphas.Length], tAlpha));
-				if(tAlpha >= 1f){
-					tAlpha = 0;
-					idxAlpha = (idxAlpha + 1) % alphas.Length;
-				}
-			}
 			//RGBの変更
 			if(colors.Length > 0){
 				tColor += Time.deltaTime / timeColors[idxColor];
@@ -44,6 +35,15 @@ public class SpriteColorControl : MonoBehaviour {
 				if(tColor >= 1f){
 					tColor = 0;
 					idxColor = (idxColor + 1) % colors.Length;
+				}
+			}
+			//アルファ値の変更
+			if(alphas.Length > 0){
+				tAlpha += Time.deltaTime / timeAlphas[idxAlpha];
+				c = ChangeAlpha(c, Mathf.Lerp(alphas[idxAlpha], alphas[(idxAlpha + 1) % alphas.Length], tAlpha));
+				if(tAlpha >= 1f){
+					tAlpha = 0;
+					idxAlpha = (idxAlpha + 1) % alphas.Length;
 				}
 			}
 			mySR.color = c;
